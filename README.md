@@ -1,3 +1,3 @@
-#django test 
+# django
 
 it is just Test app
