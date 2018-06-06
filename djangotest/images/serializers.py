@@ -1,6 +1,27 @@
 from rest_framework import serializers
 from . import models
 from djangotest.users import models as user_models
+from taggit_serializer.serializers import (TagListSerializerField,
+                                           TaggitSerializer)
+
+
+class SmallImageSerializer(serializers.ModelSerializer):
+    """ used for the notification """
+    class Meta:
+        model = models.Image
+        fields = (
+            'file',
+        )
+
+class CountImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Image
+        fields = (
+            'id',
+            'file',
+            'comment_count',
+            'like_count',
+        )
 
 class FeedUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,7 +32,7 @@ class FeedUserSerializer(serializers.ModelSerializer):
         )
         
 class CommentSerializer(serializers.ModelSerializer):
-    creator = FeedUserSerializer()
+    creator = FeedUserSerializer(read_only=True)
     class Meta:
         model = models.Comment
         fields = (
@@ -24,14 +45,17 @@ class LikeSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = models.Like
-        fields = '__all__' 
+        fields = (
+            'creator',
+        ) 
 
 
 class ImageSerializer(serializers.ModelSerializer):
     
     comments = CommentSerializer(many=True)
     creator = FeedUserSerializer()
-    
+    tags = TagListSerializerField()
+
     class Meta:
         model = models.Image
         fields = (
@@ -40,5 +64,18 @@ class ImageSerializer(serializers.ModelSerializer):
             'location',
             'caption',
             'comments',
-            'like_count'
+            'like_count',
+            'creator',
+            'created_at',
+            'tags',
+        )
+
+class InputImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Image
+        fields = (
+            'file',
+            'location',
+            'caption',
         )

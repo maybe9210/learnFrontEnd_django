@@ -48,7 +48,13 @@ THIRD_PARTY_APPS = [
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
+    'allauth.socialaccount.providers.facebook',
     'rest_framework', # REST framework
+    'rest_framework.authtoken',
+    'taggit',
+    'taggit_serializer',
+    'rest_auth',
+    'rest_auth.registration',
 ]
 
 # Apps specific for this project go here.
@@ -57,6 +63,8 @@ LOCAL_APPS = [
     'djangotest.users.apps.UsersConfig',
     # Your stuff: custom apps go here
     'djangotest.images.apps.ImagesConfig',
+    # notifications app
+    'djangotest.notifications.apps.NotificationsConfig'
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -262,8 +270,8 @@ SOCIALACCOUNT_ADAPTER = 'djangotest.users.adapters.SocialAccountAdapter'
 # Custom user app defaults
 # Select the correct user model
 AUTH_USER_MODEL = 'users.User'
-LOGIN_REDIRECT_URL = 'users:redirect'
-LOGIN_URL = 'account_login'
+# LOGIN_REDIRECT_URL = 'users:redirect'
+# LOGIN_URL = 'account_login'
 
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
@@ -274,3 +282,16 @@ ADMIN_URL = r'^admin/'
 
 # Your common stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
+
+TAGGIT_CASE_INSENSITIVE = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+}
+
+REST_USE_JWT = True

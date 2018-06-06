@@ -36,6 +36,11 @@ ipdb = "==0.10.3"
 pytest-django = "==3.1.2"
 pytest-sugar = "==0.9.0"
 djangorestframework = "*"
+pylint = "*"
+django-taggit = "*"
+djangorestframework-jwt = "*"
+django-taggit-serializer = "*"
+django-rest-auth = "*"
 
 
 [requires]

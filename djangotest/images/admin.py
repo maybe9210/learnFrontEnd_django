@@ -40,6 +40,7 @@ class LikeAdmin(admin.ModelAdmin):
 class CommnetAdmin(admin.ModelAdmin):
 
     list_display = (
+        'id',
         'message',
         'creator',
         'image',
